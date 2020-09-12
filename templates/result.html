@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card text-white bg-dark border border-success mb-3 col-md-5 mx-auto text-center">
+        <div class="card-header">Your Score</div>
+        <div class="card-body">
+            <h5 class="card-text">You've Scored</p>
+            <h1 class="card-title">{{score}}</h5>
+            <h5 class="card-text">Out of</p>
+            <h1 class="card-title">{{total}}</h5>
+            <p><b>Food For Thought:</b></p>
+            {% if quote %}
+                <p>{{quote}}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="heading mt-5 mb-5" align="center">
+        <h1>Past Scores</h1>
+    </div>
+    <div class="col-md-10 mx-auto mt-5">
+        <table class="table table-hover border table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Score</th>
+                <th scope="col">Maximum Score</th>
+                <th scope="col">Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in history %}
+                <tr>
+                    <th scope="row">{{row.added | date}}</th>
+                    <td>{{row.score}}</td>
+                    <td>{{row.total}}</td>
+                    <td>{{row.percent}}%</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+    </div>
+</div>
+
+{% endblock %}

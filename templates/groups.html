@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+    <div class="col-md-10 mx-auto" align="center">
+        <a href="#" class="btn btn-info col-md-5 mx-auto" role="button" >Create a new Group</a>
+        <div class="members mt-5">
+            <div class="text-center">
+                <h1 class="mb-5">
+                    Groups
+                </h1>
+                {% if groups %}
+                    <div class="row">
+                        {% for group in groups %}
+                            <div class="col-sm-4">
+                                <div class="card border-success mt-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{group.0}}</h5>
+                                        <p class="card-text">Number Of Users: {{group.1}}</p>
+                                        <a href="{% url 'share:detail_group_user' group.0.id %}" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <h2> No Groups </h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+
+{% endblock %}

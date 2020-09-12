@@ -1,0 +1,124 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        {% if show %}
+        <div class="container">
+            <div class="text-center">
+                <h1>Enter the number of words you want to practice with</h1>
+                <form class="mt-5 col-mb-3 offset-md-6 mx-auto" method="post">
+                    {% csrf_token %}
+                    <label for="term">Number of Words</label>
+                    <input type="number" name="number" class="form-control mb-3">
+                    <button type="submit" id="start" class="btn btn-info mt-2">Start Test</button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+            <div class="container">
+                <h1 class="text-center">
+                    Words
+                </h1>
+                <h3 class="text-center" id="score">
+                    Score: 0
+                </h3><br>
+                <div class="words-container card-columns">
+                    {% for word in words %}
+                    <div class="card text-white bg-dark mx-auto" style="oveflow:hidden;">
+                        <div class="card-header text-center"><h3>{{word.0}}</h3></div>
+                            <div class="card-body d-none">
+                                <ul>
+                                    {% for key in word.1 %}
+                                    <b>{{key.1}}</b>
+                                    {% for k in key.0 %}
+                                    <li>{{k}}</li>
+                                    {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="text-center">
+                            <a type="button" class="btn btn-secondary mb-3 mt-3 ml-5 mr-5 show-meaning" style='display: block;'>Show Meaning</a>
+                            <a type="button" class="btn btn-info mb-3 mt-2 known">Know</a>
+                            <a type="button" class="btn btn-info ml-3 mb-3 mt-2 unknown">Don't Know</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="proceed mt-3" align="center">  
+                <form name="proceed" action={% url 'practice:result' %} method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="score_input" id='score-input' class="score-input d-none">
+                    <input type="number" name="max-score" id='max-score' class="max-score d-none" value={{total_number}}>
+                    <button type="submit" id="score-btn" class="btn btn-success col-md-8 mb-5 mt-2">Proceed</button>
+                </form>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="text-center">
+            <h1>
+                Please Login to Continue
+            </h1>
+        </div>
+    {% endif %}
+
+<script>
+
+    score = 0
+
+    const shows = document.querySelectorAll('.show-meaning')
+    
+    for (const show of shows) {
+        show.addEventListener('click', (event) => {
+            console.log(event.path[2].childNodes[3].className)
+            if (event.path[2].childNodes[3].className == 'card-body') {
+                event.path[2].childNodes[3].className = 'card-body d-none';
+                event.target.innerText = 'Show Meaning';
+            } else {
+                event.path[2].childNodes[3].className = 'card-body';
+                event.target.innerText = 'Hide Meaning';
+            }
+            event.preventDefault();
+        })
+    }
+
+    const knowns = document.querySelectorAll('.known')
+    for (const item of knowns) {
+        item.addEventListener('click', (event) => {
+            console.log(event)
+            if (event.path[2].className.includes("unknown")) {
+                console.log(event.path[2].className)
+                score += 2
+                document.getElementById('score').innerText = `Score: ${score}`
+            } else if (event.path[2].className == "card text-white bg-dark mx-auto") {
+                score += 1
+                document.getElementById('score').innerText = `Score: ${score}`
+            }
+            event.path[2].style = "border-color: #22a7f0; border-style: solid; border-width: thick;";
+            event.path[2].className = "card text-white bg-dark mx-auto known";
+        })
+    }
+
+
+    const unknowns = document.querySelectorAll('.unknown')
+    for (const item of unknowns) {
+        item.addEventListener('click', (event) => {
+            if (!event.path[2].className.includes("unknown") && event.path[2].className.includes("known")) {
+                score -= 2
+                document.getElementById('score').innerText = `Score: ${score}`
+            } else if (event.path[2].className == "card text-white bg-dark mx-auto") {
+                score -= 1
+                document.getElementById('score').innerText = `Score: ${score}`
+            }
+            event.path[2].style = "border-color: #f15a22; border-style: solid; border-width: thick;";
+            event.path[2].className = "card text-white bg-dark mx-auto unknown"
+        })
+    }
+
+    document.getElementById('score-btn').addEventListener('click', (event) => {
+        document.getElementById('score-input').value = `${score}`
+    })
+
+</script>
+{% endblock %}

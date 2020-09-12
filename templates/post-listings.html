@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <div align="center">
+        <h1> {{group}} </h1>
+    </div>
+
+
+    {% if posts %}
+        <div class="row row-cols-1 row-cols-md-3 mt-5 text-center">
+        {% for post in posts %}
+            <div class="col mb-4">
+                <div class="card border border-success rounded">
+                    <img src="{{post.1.image.url}}" class="card-img-top p-3" alt="ArticleImage">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.0.title}}</h5>
+                    <p class="card-text">{{post.2}}</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="number" class="d-none" id="id" value={{post.0.id}}>
+                        <button type="submit" id="like" class="btn btn-info mt-2">{{post.3}} Likes</button>
+                        <button type="button" class="btn btn-dark ml-3 mt-2">Go To Post</button>
+                    </form>
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+</div>
+
+<script>
+const like_btns = document.querySelectorAll('#like')
+for (const item of like_btns) {
+    item.addEventListener('click', (event) => {
+        console.log(event.path[2].childNodes[5].childNodes[3].name="index")
+    })
+}
+</script>
+
+{% endblock %}

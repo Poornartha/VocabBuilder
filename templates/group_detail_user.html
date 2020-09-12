@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+    <div class="col-md-10 mx-auto">
+        <h1 class="border border-success p-2 rounded-pill text-center">{{group.name}}</h1>
+    </div>
+
+<div class="mt-5" style="width: 100%"><h1 align="center">Users</h1></div>
+<div class="row">
+{% for user in users %}
+  <div class="col-sm-4 mt-5" align="center">
+    <div class="card border-primary">
+      <div class="card-body">
+        <h5 class="card-title">{{user.0}}</h5>
+        <p class="card-text">Number of Users: {{user.1}}</p>
+        <a href="#" class="btn btn-info">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block script %}
+    <script type="application/javascript" src="{% static 'detail.js' %}"></script>
+{% endblock %}

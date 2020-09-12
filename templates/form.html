@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block button %}
+    <a href="{% url 'meaning:search'%}" class="btn btn-info ml-5 disabled" role="button" >Search Meanings</a>
+    <a href={% url 'meaning:words'%} class="btn btn-primary ml-5"  role="button">My Words</a>
+{% endblock %}
+
+{% block content %}
+    <div class="form">
+        <form action="{% url 'meaning:search' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group col-md-10 mx-auto mt-5">
+                <label for="term">Search Term</label>
+                <input type="text" name="term" class="form-control" required>
+                <input type="Submit" class="btn btn-secondary mt-2"> 
+            </div>
+        </form>
+    </div>
+
+    {% if save %}
+        {% if saved %}
+            <div class="alert alert-success col-md-5 mx-auto" role="alert">
+                The word was saved successfully.
+            </div>
+        {% else %}
+            <div class="alert alert-danger col-md-5 mx-auto" role="alert">
+                Word is already present in the database.
+            </div>
+        {% endif %}
+    {% endif %}
+
+
+    {% comment %} {% if term %}
+        <h3>
+            {{ term }}
+        </h3>
+    {% endif %} {% endcomment %}
+    {% if similar %}
+        <div class="card text-white bg-dark mb-3 col-md-5 mx-auto">
+        <div class="card-header text-center"><h4>{{term}}</h4></div>
+            <div class="card-body">
+                <h4 class="card-title">{{title}}</h4>
+                {% if definition %}
+                    {% for d in definition %}
+                        <div class="definition">
+                            <b>{{d.0}}</b>:
+                            <ul>
+                                {% for i in d.1 %}
+                                    <li>{{i}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <h3 style='text-align: center;' class="mb-3">Similar Words: </h3>
+                <div class="d-flex flex-wrap justify-content-around">
+                    {% for item in similar %}
+                        <span class="badge badge-info mt-1 pd-3" style="font-size: 1em;">{{item.word}}</span>
+                    {% endfor %}
+                </div>
+                <hr>
+                <form action="{% url 'meaning:save' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="term" name="term" value={{term}} hidden />
+                    <label for="term">Add Note</label>
+                    <input type="text" name="text" class="form-control mb-3">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+        {% comment %} {% for term in similar %}
+            <h1>{{term}}</h1>
+        {% endfor %} {% endcomment %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+    <div class="col-md-10 mx-auto">
+        <h1 class="border border-success p-2 rounded-pill text-center">{{group.name}}</h1>
+    </div>
+
+    <div class="col-md-10 mx-auto buttons mt-5" align="center">
+        <a href="{% url 'share:detail_group_user' group_id %}" id="users-btn" class="btn btn-outline-success col-md-2 mr-5" >Users</a>
+        <a href="{% url 'share:detail_group_wordwall' group_id %}" id="wordwall-btn" class="btn btn-outline-info col-md-2 ml-5" disabled>Word Wall</a>
+    </div>
+
+    <div id="word-wall">
+    <div class="mt-5" style="width: 100%"><h1 align="center">Word Wall</h1></div>
+    <div class="container mt-5 mx-auto card-columns">
+        {% for word in words %}
+            <div class="card text-white bg-dark mx-auto" style="oveflow:hidden;">
+                <div class="card-header text-center"><h3>{{word.0}}</h3></div>
+                <div class="card-body">
+                    <ul>
+                    {% for key in word.1 %}
+                        <b>{{key.1}}</b>
+                        {% for k in key.0 %}
+                            <li>{{k}}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script type="application/javascript" src="{% static 'detail.js' %}"></script>
+{% endblock %}
