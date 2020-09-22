@@ -3,8 +3,15 @@
 
 {% block content %}
     <div class="container">
+
     <div class="col-md-10 mx-auto">
         <h1 class="border border-success p-2 rounded-pill text-center">{{group.name}}</h1>
+    </div>
+
+    <div class="col-md-10 mx-auto buttons mt-5" align="center">
+        <a href="{% url 'share:detail_group_user' group_id %}" id="users-btn" class="btn btn-outline-success col-md-3 disabled">Users</a>
+        <a href="{% url 'share:list_posts' group_id %}" class="btn btn-outline-dark col-md-3 ml-5">Posts</a>
+        <a href="{% url 'share:detail_group_wordwall' group_id %}" id="wordwall-btn" class="btn btn-outline-info col-md-3 ml-5">Word Wall</a>
     </div>
 
 <div class="mt-5" style="width: 100%"><h1 align="center">Users</h1></div>
@@ -15,7 +22,7 @@
       <div class="card-body">
         <h5 class="card-title">{{user.0}}</h5>
         <p class="card-text">Number of Users: {{user.1}}</p>
-        <a href="#" class="btn btn-info">Go somewhere</a>
+        <a href={% url 'share:user_detail' user.0.id%} class="btn btn-info">Show More</a>
       </div>
     </div>
   </div>

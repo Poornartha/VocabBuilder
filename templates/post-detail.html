@@ -18,17 +18,42 @@
 </div>
 
 <div class="mt-5">
-{% for comment in comments %}
-    <p>{{comment}}</p>
-{% endfor %}
-</div>
-
-
-
-<div class="mt-5">
 <p>{{post.text}}</p>
 </div>
 
+<div class="mt-5 form-div mb-5">
+    <form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="textArea">What do you feel about this post?</label>
+        <textarea class="form-control" name="comment" id="textArea" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Submit</button>
+    </form>
 </div>
+
+<div class="mt-5" align="center">
+{% for comment in comments %}
+    <div class="card border-success m-5">
+    <div class="card-header">
+        {{comment.user}}
+    </div>
+    <div class="card-body">
+        <blockquote class="blockquote mb-0">
+        <p>{{comment.content}}</p>
+        <form action={% url 'share:comment_like' comment.id post.id %} method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-info">
+                Likes <span class="badge badge-light">{{comment.likes.count}}</span>
+            </button>
+        </form>
+        </blockquote>
+    </div>
+    </div>
+{% endfor %}
+</div>
+
+</div>
+
 
 {% endblock %}

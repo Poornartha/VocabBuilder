@@ -4,10 +4,15 @@
 
 <div class="container">
 
-    <div align="center">
-        <h1> {{group}} </h1>
+    <div class="col-md-10 mx-auto">
+        <h1 class="border border-success p-2 rounded-pill text-center">{{group.name}}</h1>
     </div>
 
+    <div class="col-md-10 mx-auto buttons mt-5" align="center">
+        <a href="{% url 'share:detail_group_user' group.id %}" id="users-btn" class="btn btn-outline-success col-md-3">Users</a>
+        <a href="{% url 'share:list_posts' group.id %}" class="btn btn-outline-dark col-md-3 ml-5 disabled">Posts</a>
+        <a href="{% url 'share:detail_group_wordwall' group.id %}" id="wordwall-btn" class="btn btn-outline-info col-md-3 ml-5">Word Wall</a>
+    </div>
 
     {% if posts %}
         <div class="row row-cols-1 row-cols-md-3 mt-5 text-center">
@@ -22,13 +27,18 @@
                         {% csrf_token %}
                         <input type="number" class="d-none" id="id" value={{post.0.id}}>
                         <button type="submit" id="like" class="btn btn-info mt-2">{{post.3}} Likes</button>
-                        <button type="button" class="btn btn-dark ml-3 mt-2">Go To Post</button>
+                        <a href={% url 'share:detail_post' post.0.id%}><button type="button" class="btn btn-dark ml-3 mt-2">Go To Post</button></a>
                     </form>
                 </div>
             </div>
             </div>
         {% endfor %}
         </div>
+    {% else %}
+    <div class="col-md-12 mt-5" align="center">
+        <h1>Not Posts Yet</h1>
+        <a href={% url 'share:create_post' group.id %}><button type="button" class="btn btn-outline-info col-md-5 mt-5">Create A Post!</button></a>
+    </div>
     {% endif %}
 
 </div>

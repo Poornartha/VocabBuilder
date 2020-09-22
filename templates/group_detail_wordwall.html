@@ -8,8 +8,9 @@
     </div>
 
     <div class="col-md-10 mx-auto buttons mt-5" align="center">
-        <a href="{% url 'share:detail_group_user' group_id %}" id="users-btn" class="btn btn-outline-success col-md-2 mr-5" >Users</a>
-        <a href="{% url 'share:detail_group_wordwall' group_id %}" id="wordwall-btn" class="btn btn-outline-info col-md-2 ml-5" disabled>Word Wall</a>
+        <a href="{% url 'share:detail_group_user' group_id %}" id="users-btn" class="btn btn-outline-success col-md-3">Users</a>
+        <a href="{% url 'share:list_posts' group_id %}" class="btn btn-outline-dark col-md-3 ml-5">Posts</a>
+        <a href="{% url 'share:detail_group_wordwall' group_id %}" id="wordwall-btn" class="btn btn-outline-info col-md-3 ml-5 disabled">Word Wall</a>
     </div>
 
     <div id="word-wall">

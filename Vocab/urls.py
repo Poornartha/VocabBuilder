@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-import Pages, Meaning, Share, Practice
+import Pages, Meaning, Share, Practice, Accounts
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,6 +25,7 @@ urlpatterns = [
     path('meaning', include('Meaning.urls', namespace='meaning')),
     path('share/', include('Share.urls', namespace='share')),
     path('practice/', include('Practice.urls', namespace='practice')),
+    path('users/', include('Accounts.urls', namespace='users')),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="heaing" align="center">
+            <h1>{{user | title}}</h1>
+            <h5 class="mt-5">Saved Words</h5>
+        </div>
+        <div class="container mt-5 mx-auto card-columns">
+            {% for word in words %}
+                <div class="card text-white bg-dark mx-auto" style="oveflow:hidden;">
+                    <div class="card-header text-center"><h3>{{word.0}}</h3></div>
+                    <div class="card-body">
+                        {% for key in word.1 %}
+                        <h4 class="card-title">{{key.0}}</h4>
+                        <ul>
+                        {% for mean in key.1%}
+                            <li>{{mean}}</li>
+                        {% endfor %}
+                        </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h1> Please Log In </h1>
+    {% endif %}
+
+
+{% endblock %}

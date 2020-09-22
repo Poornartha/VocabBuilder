@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'Meaning',
     'Share',
     'Practice',
+    'Accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

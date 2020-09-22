@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-
-
     <div class="col-md-10 mx-auto" align="center">
+        <a href={% url 'share:groups' %} class="btn btn-outline-dark col-md-5 mx-auto mb-3" role="button" >Groups That You Follow</a>
+        <br>
         <a href="#" class="btn btn-info col-md-5 mx-auto" role="button" >Create a new Group</a>
         <h1 class="mt-5" style="text-align: center;"> Groups You Don't Follow </h1>
         <div class="members mt-5">

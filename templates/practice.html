@@ -10,7 +10,7 @@
                 <form class="mt-5 col-mb-3 offset-md-6 mx-auto" method="post">
                     {% csrf_token %}
                     <label for="term">Number of Words</label>
-                    <input type="number" name="number" class="form-control mb-3">
+                    <input type="number" min="0" max="30" name="number" class="form-control mb-3">
                     <button type="submit" id="start" class="btn btn-info mt-2">Start Test</button>
                 </form>
             </div>

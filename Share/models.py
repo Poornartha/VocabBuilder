@@ -28,13 +28,14 @@ class Image(models.Model):
     image = models.ImageField(upload_to='PostImages')
 
 class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.TextField(max_length=300)
-    likes = models.ManyToManyField(User, blank=True)
+    likes = models.ManyToManyField(User, blank=True, related_name='comment_likes')
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Mata:
-        ordering = ['-timestamp']
+        ordering = ['timestamp']
 
 
 
