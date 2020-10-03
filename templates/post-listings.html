@@ -14,6 +14,10 @@
         <a href="{% url 'share:detail_group_wordwall' group.id %}" id="wordwall-btn" class="btn btn-outline-info col-md-3 ml-5">Word Wall</a>
     </div>
 
+    <div class="col-md-12 mx-auto" align="center">
+        <a href="{% url 'share:create_post' group.id %}" id="create_post" class="btn btn-info col-md-3 mt-5">Create Post</a>
+    </div>
+
     {% if posts %}
         <div class="row row-cols-1 row-cols-md-3 mt-5 text-center">
         {% for post in posts %}
