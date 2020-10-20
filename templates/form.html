@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block button %}
+    <div align="center">
     <a href="{% url 'meaning:search'%}" class="btn btn-info ml-5 disabled" role="button" >Search Meanings</a>
     <a href={% url 'meaning:words'%} class="btn btn-primary ml-5"  role="button">My Words</a>
+    </div>
 {% endblock %}
 
 {% block content %}
-    <div class="form">
+    <div class="form" align="center">
         <form action="{% url 'meaning:search' %}" method="POST">
             {% csrf_token %}
             <div class="form-group col-md-10 mx-auto mt-5">
